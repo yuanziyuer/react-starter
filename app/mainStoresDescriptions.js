@@ -43,5 +43,7 @@ module.exports = {
 	// stores information about each chat user
 	// currently this only stores the message count
 	// uses defaults for everything (simple key-value data)
-	ChatUser: {}
+	ChatUser: {},
+
+	Strategy: {}
 };

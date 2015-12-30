@@ -84,7 +84,13 @@ stores = module.exports = {
 
 		queueRequest: queue.push.bind(queue),
 		...desc.ChatUser
-	}, initialData.ChatUser)
+	}, initialData.ChatUser),
+
+	Strategy: new ItemsStore({
+		readSingleItem: readSingleItem("http://101.251.204.42:3010/strategies/"),
+		queueRequest: queue.push.bind(queue),
+		...desc.Strategy
+	}, initialData.Strategy)
 };
 
 

@@ -1,6 +1,5 @@
 import request from "superagent";
 import ReactUpdates from "react/lib/ReactUpdates";
-
 // a few helper methods for a REST API
 
 // batchedCallback batches component updates
@@ -15,7 +14,7 @@ export function writeAndReadSingleItem(path, resultHandler) {
 	resultHandler = resultHandler || function(result) { return result; };
 	return function(options, callback) {
 		request.post(path + options.id)
-			.set("Accept", "application/json")
+			.set("Accept", "application/vnd.yuanzi.v2+json")
 			.type("json")
 			.send(options.update)
 			.end(batchedCallback(function(err, res) {
@@ -30,9 +29,7 @@ export function writeAndReadSingleItem(path, resultHandler) {
 export function readSingleItem(path, resultHandler) {
 	resultHandler = resultHandler || function(result) { return result; };
 	return function(options, callback) {
-		request.get(path + options.id)
-			.set("Accept", "application/json")
-			.type("json")
+		request.get(path + options.id + '?version=v2')
 			.end(batchedCallback(function(err, res) {
 				if(err) return callback(err);
 				if(res.status !== 200)
@@ -48,7 +45,7 @@ export function readMultipleItems(path, resultHandler) {
 		request.get(path + optionsArr.map(function(options) {
 			return options.id;
 		}).join("+"))
-			.set("Accept", "application/json")
+			.set("Accept", "application/vnd.yuanzi.v2+json")
 			.type("json")
 			.end(batchedCallback(function(err, res) {
 				if(err) return callback(err);
